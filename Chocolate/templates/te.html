@@ -1,0 +1,19 @@
+<script type="text/javascript">
+
+         function buildList(){
+                var wrapper = document.getElementById('list-wrapper')
+                //wrapper.innerHTML = ''
+
+                var url = 'http://127.0.0.1:8000/api/v1/details/2/'
+
+                fetch(url)
+                .then((resp) => resp.json())
+                .then(function(data){
+                    console.log('Data:', data)
+               })
+
+          }
+
+</script>
+
+
