@@ -6,7 +6,7 @@ from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import generics, permissions
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
 from django.db.models import Q # for search method
 from django.http import JsonResponse
@@ -19,7 +19,6 @@ from cart.cart import Cart
 
 
 class LoginAPI(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login.html'
     serializer_class = RegisterSerializer
@@ -34,9 +33,9 @@ class LoginAPI(KnoxLoginView):
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'Register.html'
     serializer_class = RegisterSerializer
+    renderer_classes = (JSONRenderer, TemplateHTMLRenderer,)
+    template_name = "Register.html"
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
